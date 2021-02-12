@@ -14,7 +14,7 @@ namespace Sender
                 Console.WriteLine("Enter a message. 'Quit' to quit.");
                 while ((input = Console.ReadLine()) != "Quit")
                 {
-                    bus.Send<TextMessage>("myQueue", new TextMessage
+                    bus.SendReceive.Send<TextMessage>("myQueue", new TextMessage
                     {
                         Text = input
                     });

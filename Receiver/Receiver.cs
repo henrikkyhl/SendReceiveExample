@@ -10,7 +10,7 @@ namespace Receiver
         {
             using (var bus = RabbitHutch.CreateBus("host=localhost"))
             {
-                bus.Receive<TextMessage>("myQueue", message => HandleOrderReplyMessage(message));
+                bus.SendReceive.Receive<TextMessage>("myQueue", message => HandleOrderReplyMessage(message));
                 Console.ReadLine();
             }
         }
