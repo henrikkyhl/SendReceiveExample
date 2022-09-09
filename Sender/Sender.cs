@@ -1,25 +1,15 @@
-﻿using System;
-using EasyNetQ;
+﻿using EasyNetQ;
 using Messages;
 
-namespace Sender
+using (var bus = RabbitHutch.CreateBus("host=localhost"))
 {
-    class Sender
+    var input = "";
+    Console.WriteLine("Enter a message. 'Quit' to quit.");
+    while ((input = Console.ReadLine()) != "Quit")
     {
-        static void Main(string[] args)
+        bus.SendReceive.Send<TextMessage>("myQueue", new TextMessage
         {
-            using (var bus = RabbitHutch.CreateBus("host=localhost"))
-            {
-                var input = "";
-                Console.WriteLine("Enter a message. 'Quit' to quit.");
-                while ((input = Console.ReadLine()) != "Quit")
-                {
-                    bus.SendReceive.Send<TextMessage>("myQueue", new TextMessage
-                    {
-                        Text = input
-                    });
-                }
-            }
-        }
+            Text = input
+        });
     }
 }
