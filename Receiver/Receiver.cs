@@ -1,7 +1,10 @@
 ﻿using EasyNetQ;
 using Messages;
 
-using (var bus = RabbitHutch.CreateBus("host=localhost"))
+string connectionStr =
+    "host=hare.rmq.cloudamqp.com;virtualHost=npaprqop;username=npaprqop;password=<type your password here>";
+
+using (var bus = RabbitHutch.CreateBus(connectionStr))
 {
     bus.SendReceive.Receive<TextMessage>("myQueue", message => HandleOrderReplyMessage(message));
     Console.ReadLine();
